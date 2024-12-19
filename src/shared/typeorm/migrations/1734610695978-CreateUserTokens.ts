@@ -24,7 +24,6 @@ export class CreateUserTokens1734610695978 implements MigrationInterface {
                         {
                             name: 'user_id',
                             type: 'uuid',
-                            isUnique: true,
                         },
                         {
                             name: 'created_at',

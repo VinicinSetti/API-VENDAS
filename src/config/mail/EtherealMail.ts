@@ -17,7 +17,7 @@ interface IMailContact{
 
 interface ISendMail{
     to: IMailContact;
-    from: IMailContact;
+    from?: IMailContact;
     subject: string;
     templateData: IParceMailTemplate;
 }
@@ -43,8 +43,8 @@ export default class EtherealMail{
         
         const message = await transporter.sendMail({
             from: {
-                name: from.name || 'Equipe API Vendas',
-                address: from.email || "equipe@apivendas.com.br"
+                name: from?.name || 'Equipe API Vendas',
+                address: from?.email || "equipe@apivendas.com.br"
             },
             to: {
                 name: to.name,

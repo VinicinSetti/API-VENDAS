@@ -1,27 +1,31 @@
-import CreateUserService from "../services/CreateUserService";
-import ListUserService from "../services/ListUserService";
-import {Request, Response} from 'express'
+import { Request, Response } from 'express';
+import ShowProfileService from '../services/ShowProfileService';
+import UpdateProfileService from '../services/UpdateProfileService';
 
-export default class UserController {
-    public async index(request: Request, response: Response): Promise<Response>{
-        const listUser = new ListUserService();
+export default class ProfileController {
+  public async show(request: Request, response: Response): Promise<Response> {
+    const showProfile = new ShowProfileService();
+    const user_id = request.user.id;
 
-        console.log(request.user.id);
+    const user = await showProfile.execute({ user_id });
 
-        const users = await listUser.execute();
+    return response.json(user);
+  }
 
-        return response.json(users);
-    }
+  public async update(request: Request, response: Response): Promise<Response> {
+    const user_id = request.user.id;
+    const { name, email, password, old_password } = request.body;
 
-    public async create(request: Request, response: Response): Promise<Response>{
-        const {name, email, password} = request.body;
+    const updateProfile = new UpdateProfileService();
 
-        const creatUser = new CreateUserService();
+    const user = await updateProfile.execute({
+      user_id,
+      name,
+      email,
+      password,
+      old_password
+    });
 
-        const user = await creatUser.execute({
-            name, email, password
-        });
-
-        return response.json(user);
-    }
+    return response.json(user);
+  }
 }

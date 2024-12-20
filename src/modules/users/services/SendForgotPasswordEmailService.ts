@@ -4,7 +4,6 @@ import path from "path";
 import UsersRepository from "../typeorm/repositories/UsersRepository";
 import UserTokensRepository from "../typeorm/repositories/UserTokensRepository";
 import EtherealMail from "@config/mail/EtherealMail";
-import { link } from "joi";
 
 
 interface IRequest {
@@ -25,9 +24,9 @@ class SendForgotPasswordEmailService {
         const {token} = await userTokensRepository.generate(user.id);
 
         const forgotPasswordTemplate = path.resolve(
-            __dirname, 
-            '../', 
-            'views', 
+            __dirname,
+            '../',
+            'views',
             'forgot_password.hbs'
         );
 
